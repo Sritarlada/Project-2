@@ -8,22 +8,22 @@
   tasks:
    - name: create dest dir
      file:
-      path: "./aws/install"
+      path: "./ansible/installations"
       state: mkdir
 
    - name: install unzip
-      apt: pkg=unzip={{ unzip_version }} 
-      state: present
+     apt: pkg=unzip={{ unzip_version }} 
+     state: present
 
 
-   - name: download_aws_cli
-      ansible.builtin.get_url:
+   - name: aws-cli
+     ansible.builtin.get_url:
         url: http://example.com/path/file.confhttps://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-        dest: ./aws/install
+        dest: ./ansible/installations
         mode: '0400'
 
-   - name: extract-awscliv2
-      ansible.builtin.unarchive:
+   - name: extract-awscli
+     ansible.builtin.unarchive:
         src: awscli-exe-linux-x86_64.zip
         dest: /usr/local/bin/aws
 ...
