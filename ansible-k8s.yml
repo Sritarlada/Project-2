@@ -1,0 +1,29 @@
+---
+- hosts: "workstation"
+  remote_user: "centos-7"
+  become: "yes"
+  become_method: "sudo"
+  connection: "ssh"
+
+    tasks:
+      - name: create dest dir
+        file:
+          path: "./aws/install"
+          state: mkdir
+
+      - name: Install unzip
+          apt: pkg=unzip={{ unzip_version }} 
+          state: present
+
+
+      - name: Download AWS CLI
+        ansible.builtin.get_url:
+          url: http://example.com/path/file.confhttps://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          dest: ./aws/install
+          mode: '0400'
+
+      - name: Extract awscliv2.zip into /usr/local/bin/aws
+        ansible.builtin.unarchive:
+          src: awscli-exe-linux-x86_64.zip
+          dest: /usr/local/bin/aws
+...
